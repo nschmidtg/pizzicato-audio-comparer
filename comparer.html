@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Comparer</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script type="text/javascript" src="wp-content/themes/minimal-portfolio/assets/js/pizzicato.js"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="col-md-12">	
+	<h3>Cool song1</h3>
+	<div class="btn-group song1">
+	  <button type="button" class="btn btn-default play-a-file">Original
+	  	<span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+	  </button>
+	  <button type="button" class="btn btn-default play-b-file">Enhanced
+	  	<span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+	  </button>
+	  <button type="button" class="btn btn-default stop-audio">
+	  	<span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+	  </button>
+	</div>
+</div>
+<div class="col-md-12">
+	<h3>Cool song2</h3>	
+	<div class="btn-group song2">
+	  <button type="button" class="btn btn-default play-a-file">Original
+	  	<span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+	  </button>
+	  <button type="button" class="btn btn-default play-b-file">Enhanced
+	  	<span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+	  </button>
+	  <button type="button" class="btn btn-default stop-audio">
+	  	<span class="glyphicon glyphicon-stop" aria-hidden="true"></span>
+	  </button>
+	</div>
+</div>
+<script>
+	function comparador(song, aURL,bURL){
+		var aFile = new Pizzicato.Sound(aURL);
+		var bFile = new Pizzicato.Sound(bURL);
+		aFile.volume = 0;
+		bFile.volume = 0;
+		var group = new Pizzicato.Group([bFile, aFile]);
+	    song.find(".play-a-file").click(function(){
+	    	if(aFile.volume == 0){
+	    		aFile.play();
+	    		bFile.play();	
+	    	}
+	    	aFile.volume = 1;
+	    	bFile.volume = 0;
+			
+		});
+		song.find(".play-b-file").click(function(){
+	    	if(bFile.volume == 0){
+	    		bFile.play();
+	    		aFile.play();	
+	    	}
+	    	bFile.volume = 1;
+	    	aFile.volume = 0;
+			
+		});
+		song.find(".stop-audio").click(function(){
+			aFile.volume = 0;
+			bFile.volume = 0;
+	    	group.pause();
+		});
+	}
+	comparador($(".song1"),'assets/Snow.mp3','assets/Snow30Enero.wav');
+	comparador($(".song2"),'assets/Inxhale-1-1.mp3','assets/Inxhale-1.mp3');	
+</script>
+</body>
+</html>
